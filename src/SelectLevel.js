@@ -5,7 +5,7 @@ export default function SelectLevel({ levels, level, handleChange }) {
   return (
     <div>
     
-      <div style={{background:"grey" }} className="button" onClick={()=>setOpened(!opened)}><h3>Select {opened ? (
+      <div style={{background:"#D3D3D3" }} className="button" onClick={()=>setOpened(!opened)}><h3>Select {opened ? (
         <span>close</span>
       ):(
         <span>open</span>
