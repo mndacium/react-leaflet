@@ -9,7 +9,6 @@ export default function SelectDistrict({ districts, level, handleChange }) {
             key={index}
             style={{
               fontSize: `20px`,
-              background: `#D3D3D3`,
             }}
             className="button"
             onClick={() => handleChange(item)}

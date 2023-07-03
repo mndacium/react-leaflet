@@ -2,7 +2,8 @@ import "leaflet/dist/leaflet.css";
 import "./map.css";
 import { MapContainer, TileLayer, GeoJSON, Popup } from "react-leaflet";
 import { useEffect, useState, useRef } from "react";
-import { L, latLngBounds , map } from "leaflet";
+import { L, latLngBounds, map } from "leaflet";
+import Legend from "./Legend";
 
 export default function MyMap({ level, geoJsonData, jsonData, district }) {
   const mapRef = useRef(null);
@@ -10,10 +11,7 @@ export default function MyMap({ level, geoJsonData, jsonData, district }) {
   useEffect(() => {
     if (mapRef.current && district) {
       const { bbox } = district;
-      const bounds = latLngBounds (
-        [bbox[1], bbox[0]],
-        [bbox[3], bbox[2]]
-      );
+      const bounds = latLngBounds([bbox[1], bbox[0]], [bbox[3], bbox[2]]);
       mapRef.current.flyToBounds(bounds);
     }
   }, [district]);
@@ -39,19 +37,19 @@ export default function MyMap({ level, geoJsonData, jsonData, district }) {
     };
   }
   function getColor(d) {
-    return d > 500
+    return d > 1000
       ? "#800026"
-      : d > 100
+      : d > 500
       ? "#BD0026"
-      : d > 50
+      : d > 200
       ? "#E31A1C"
-      : d > 20
+      : d > 100
       ? "#FC4E2A"
-      : d > 5
+      : d > 50
       ? "#FD8D3C"
-      : d > 3
+      : d > 20
       ? "#FEB24C"
-      : d > 0
+      : d > 10
       ? "#FED976"
       : "red";
   }
@@ -92,6 +90,7 @@ export default function MyMap({ level, geoJsonData, jsonData, district }) {
           layer.on("click", handleFeatureClick);
         }}
       />
+      <Legend getColor={getColor}></Legend>
     </MapContainer>
   );
 }
