@@ -42,7 +42,9 @@ function App() {
   if (!loading)
     return (
       <div className="App">
+        
         <h2>Population density map of the UK</h2>
+       
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ marginRight: "50px" }}>
             <SelectLevel
@@ -53,6 +55,7 @@ function App() {
             <SelectDistrict
               level={level}
               districts={geoJsonData}
+            
               handleChange={changeDistrict}
             ></SelectDistrict>
           </div>
@@ -62,6 +65,7 @@ function App() {
               geoJsonData={geoJsonData}
               jsonData={jsonData}
               level={level}
+              district={district}
             />
           </div>
         </div>
