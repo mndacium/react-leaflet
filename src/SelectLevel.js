@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-export default function SelectLevel({ levels, level, handleChange }) {
+export default function SelectLevel({ loading,levels, level, handleChange }) {
   const [opened, setOpened] = useState(true);
   return (
     <div>
@@ -13,20 +13,20 @@ export default function SelectLevel({ levels, level, handleChange }) {
       </div>
 
       <div style={{ display: `${opened ? "" : "none"}` }}>
-        {" "}
-        {levels.map((item, index) => {
-          return (
-            <p
-              key={index}
-              style={{
-                fontSize: `${level === item ? "20px" : "18px"}`,
-                background: `${level === item ? "#D3D3D3" : ""}`,
-                width: "250px",
-              }}
-              onClick={() => handleChange(item)}
-            >{`Level ${item}`}</p>
-          );
-        })}
+        {!loading &&
+          levels.map((item, index) => {
+            return (
+              <p
+                key={index}
+                style={{
+                  fontSize: `${level === item ? "20px" : "18px"}`,
+                  background: `${level === item ? "#D3D3D3" : ""}`,
+                  width: "250px",
+                }}
+                onClick={() => handleChange(item)}
+              >{`Level ${item}`}</p>
+            );
+          })}
       </div>
     </div>
   );

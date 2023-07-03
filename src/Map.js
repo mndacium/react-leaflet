@@ -1,18 +1,32 @@
 import "leaflet/dist/leaflet.css";
 import "./map.css";
-import { MapContainer, TileLayer, GeoJSON, Popup } from "react-leaflet";
-import { useEffect, useState, useRef } from "react";
-import { L, latLngBounds, map } from "leaflet";
+import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import { useEffect, useRef } from "react";
+import { latLngBounds } from "leaflet";
 import Legend from "./Legend";
 
-export default function MyMap({ level, geoJsonData, jsonData, district }) {
+export default function MyMap({
+  level,
+  geoJsonData,
+  jsonData,
+  district,
+  changeLevel,
+}) {
   const mapRef = useRef(null);
-  useEffect(() => {}, [level]);
+  const handleMapZoomEnd = () => {
+    console.log(mapRef.current.getZoom());
+    if (mapRef.current.getZoom() > 7) {
+      changeLevel(2);
+    } else {
+      changeLevel(1);
+    }
+  };
   useEffect(() => {
     if (mapRef.current && district) {
       const { bbox } = district;
       const bounds = latLngBounds([bbox[1], bbox[0]], [bbox[3], bbox[2]]);
       mapRef.current.flyToBounds(bounds);
+      console.log(mapRef.current.getZoom());
     }
   }, [district]);
 
@@ -51,7 +65,7 @@ export default function MyMap({ level, geoJsonData, jsonData, district }) {
       ? "#FEB24C"
       : d > 10
       ? "#FED976"
-      : "red";
+      : "#fffdaf";
   }
   function createPopupContent(feature, level) {
     let name = "";
@@ -79,10 +93,17 @@ export default function MyMap({ level, geoJsonData, jsonData, district }) {
     const popupContent = createPopupContent(feature, level);
     layer.bindPopup(popupContent).openPopup();
   }
+
   let center = [56, -2];
   return (
-    <MapContainer center={center} minZoom={5} zoom={5} ref={mapRef}>
-      <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png" />
+    <MapContainer
+      center={center}
+      minZoom={5}
+      zoom={level === 1 ? 5 : 8}
+      ref={mapRef}
+      whenReady={(event) => event.target.on("zoomend", handleMapZoomEnd)}
+    >
+      <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <GeoJSON
         data={geoJsonData.features}
         style={(feature) => style(feature, level)}

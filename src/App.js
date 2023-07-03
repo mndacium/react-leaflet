@@ -38,39 +38,42 @@ function App() {
     console.log("Appjs rerender");
     getGeoData(level);
   }, [level]);
-  if (loading) return <h1>Loading...</h1>;
-  if (!loading)
-    return (
-      <div className="App">
-        
-        <h2>Population density map of the UK</h2>
-       
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <div style={{ marginRight: "50px" }}>
-            <SelectLevel
-              level={level}
-              levels={levels}
-              handleChange={changeLevel}
-            ></SelectLevel>
-            <SelectDistrict
-              level={level}
-              districts={geoJsonData}
-            
-              handleChange={changeDistrict}
-            ></SelectDistrict>
-          </div>
 
-          <div style={{ width: "650px", height: "800px" }}>
+  return (
+    <div className="App">
+      <h2>Population density map of the UK</h2>
+
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ marginRight: "50px" }}>
+          <SelectLevel
+            loading={loading}
+            level={level}
+            levels={levels}
+            handleChange={changeLevel}
+          ></SelectLevel>
+
+          <SelectDistrict
+            loading={loading}
+            level={level}
+            districts={geoJsonData}
+            handleChange={changeDistrict}
+          ></SelectDistrict>
+        </div>
+        <div style={{ width: "650px", height: "800px" }}>
+          {!loading && (
             <MyMap
+              loading={loading}
               geoJsonData={geoJsonData}
               jsonData={jsonData}
               level={level}
               district={district}
+              changeLevel={changeLevel}
             />
-          </div>
+          )}
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default App;

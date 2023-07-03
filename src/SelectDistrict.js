@@ -1,7 +1,7 @@
-import { useState } from "react";
 import "./App.css";
-export default function SelectDistrict({ districts, level, handleChange }) {
-  return (
+export default function SelectDistrict({ loading,districts, level, handleChange }) {
+  if(loading) return <div></div>
+  if(!loading) return(
     <div>
       {districts.features.map((item, index) => {
         return (
