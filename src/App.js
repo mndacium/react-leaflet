@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "./App.css";
-import MyMap from "./Map";
-import SelectLevel from "./SelectLevel";
-import SelectDistrict from "./SelectDistrict";
+import MyMap from "./components/Map";
+import SelectLevel from "./components/SelectLevel";
+import DistrictsList from "./components/DistrictsList";
 function App() {
-  let levels = [1, 2];
   const [level, setLevel] = useState(1);
   const [district, setDistrict] = useState();
   const [jsonData, setJsonData] = useState(null);
@@ -38,26 +37,31 @@ function App() {
     console.log("Appjs rerender");
     getGeoData(level);
   }, [level]);
-
+  const levels = useMemo(() => [1, 2], []);
+  const SelectLevelComponent = useMemo(() => {
+    return (
+      <SelectLevel
+        loading={loading}
+        level={level}
+        levels={levels}
+        handleChange={changeLevel}
+      ></SelectLevel>
+    );
+  }, [level, loading,levels]);
   return (
     <div className="App">
       <h2>Population density map of the UK</h2>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ marginRight: "50px" }}>
-          <SelectLevel
-            loading={loading}
-            level={level}
-            levels={levels}
-            handleChange={changeLevel}
-          ></SelectLevel>
+          {SelectLevelComponent}
 
-          <SelectDistrict
+          <DistrictsList
             loading={loading}
             level={level}
             districts={geoJsonData}
             handleChange={changeDistrict}
-          ></SelectDistrict>
+          ></DistrictsList>
         </div>
         <div style={{ width: "650px", height: "800px" }}>
           {!loading && (

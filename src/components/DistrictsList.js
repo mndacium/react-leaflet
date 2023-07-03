@@ -1,6 +1,6 @@
-import "./App.css";
-export default function SelectDistrict({ loading,districts, level, handleChange }) {
-  if(loading) return <div></div>
+
+export default function DistrictsList({ loading,districts, level, handleChange }) {
+  if(loading) return <div>Loading..</div>
   if(!loading) return(
     <div>
       {districts.features.map((item, index) => {

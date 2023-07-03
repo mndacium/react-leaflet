@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css";
+
 export default function SelectLevel({ loading,levels, level, handleChange }) {
   const [opened, setOpened] = useState(true);
   return (
@@ -13,7 +13,7 @@ export default function SelectLevel({ loading,levels, level, handleChange }) {
       </div>
 
       <div style={{ display: `${opened ? "" : "none"}` }}>
-        {!loading &&
+        {
           levels.map((item, index) => {
             return (
               <p

@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import L from "leaflet";
 import { useMap } from "react-leaflet";
 import "./legend.css";
-const Legend = ({ getColor }) => {
+import getColor from "../utils/getColor";
+const Legend = () => {
   const map = useMap();
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const Legend = ({ getColor }) => {
         legend.remove();
       }
     };
-  }, [map, getColor]);
+  }, [map]);
 
   return null;
 };

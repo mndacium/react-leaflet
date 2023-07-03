@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { useEffect, useRef } from "react";
 import { latLngBounds } from "leaflet";
 import Legend from "./Legend";
-
+import getColor from "../utils/getColor";
 export default function MyMap({
   level,
   geoJsonData,
@@ -50,23 +50,7 @@ export default function MyMap({
       fillOpacity: 1,
     };
   }
-  function getColor(d) {
-    return d > 1000
-      ? "#800026"
-      : d > 500
-      ? "#BD0026"
-      : d > 200
-      ? "#E31A1C"
-      : d > 100
-      ? "#FC4E2A"
-      : d > 50
-      ? "#FD8D3C"
-      : d > 20
-      ? "#FEB24C"
-      : d > 10
-      ? "#FED976"
-      : "#fffdaf";
-  }
+  
   function createPopupContent(feature, level) {
     let name = "";
     let correspondingItem = "";
@@ -111,7 +95,7 @@ export default function MyMap({
           layer.on("click", handleFeatureClick);
         }}
       />
-      <Legend getColor={getColor}></Legend>
+      <Legend></Legend>
     </MapContainer>
   );
 }
